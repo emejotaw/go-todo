@@ -1,8 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"github.com/emejotaw/go-todo/routes"
+)
 
 func main() {
 
-	fmt.Println("Hello, World!")
+	routes.Start()
 }
