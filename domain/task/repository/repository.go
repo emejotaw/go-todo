@@ -12,5 +12,5 @@ var (
 
 type Repository interface {
 	Create(aggregate.TODO) error
-	GetAll() (aggregate.TODO, error)
+	GetAll() ([]aggregate.TODO, error)
 }

@@ -10,6 +10,12 @@ type TaskRepository struct {
 	tasks map[uuid.UUID]aggregate.TODO
 }
 
+func NewTaskRepository() *TaskRepository {
+	return &TaskRepository{
+		tasks: make(map[uuid.UUID]aggregate.TODO),
+	}
+}
+
 func (t *TaskRepository) Create(todo aggregate.TODO) error {
 
 	if t.tasks == nil {
@@ -24,7 +30,7 @@ func (t *TaskRepository) Create(todo aggregate.TODO) error {
 	return nil
 }
 
-func (t *TaskRepository) GetAll(todo aggregate.TODO) ([]aggregate.TODO, error) {
+func (t *TaskRepository) GetAll() ([]aggregate.TODO, error) {
 
 	tasks := []aggregate.TODO{}
 
