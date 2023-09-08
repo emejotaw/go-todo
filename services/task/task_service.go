@@ -2,8 +2,10 @@ package task
 
 import (
 	"github.com/emejotaw/go-todo/domain/task/aggregate"
+	"github.com/emejotaw/go-todo/domain/task/entity"
 	"github.com/emejotaw/go-todo/domain/task/repository"
 	"github.com/emejotaw/go-todo/domain/task/repository/memory"
+	"github.com/emejotaw/go-todo/valueobject"
 )
 
 type TaskConfiguration func(ts *TaskService) error
@@ -23,16 +25,23 @@ func NewTaskService(configurations ...TaskConfiguration) *TaskService {
 	return taskService
 }
 
-func (ts *TaskService) CreateTask() {
+func (ts *TaskService) CreateTask(dto valueobject.TaskDTO) error {
 
+	todo := aggregate.NewTodo(dto.Name, dto.Description)
+	return ts.repository.Create(todo)
 }
 
-func (ts *TaskService) GetTasks() ([]aggregate.TODO, error) {
+func (ts *TaskService) GetTasks() ([]entity.Task, error) {
 
-	tasks, err := ts.repository.GetAll()
+	todos, err := ts.repository.GetAll()
+	tasks := []entity.Task{}
 
 	if err != nil {
 		return nil, err
+	}
+
+	for _, todo := range todos {
+		tasks = append(tasks, *todo.GetTask())
 	}
 
 	return tasks, err
