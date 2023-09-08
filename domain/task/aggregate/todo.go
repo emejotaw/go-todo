@@ -15,7 +15,7 @@ type TODO struct {
 	task *entity.Task
 }
 
-func NewTodo(name, description string) *TODO {
+func NewTodo(name, description string) TODO {
 
 	task := &entity.Task{
 		ID:          uuid.New(),
@@ -23,18 +23,22 @@ func NewTodo(name, description string) *TODO {
 		Description: description,
 	}
 
-	return &TODO{
+	return TODO{
 		task: task,
 	}
 }
 
-func NewTodoWithTask(task *entity.Task) *TODO {
+func NewTodoWithTask(task *entity.Task) TODO {
 
-	return &TODO{
+	return TODO{
 		task: task,
 	}
 }
 
 func (t *TODO) GetID() uuid.UUID {
 	return t.task.ID
+}
+
+func (t *TODO) GetTask() *entity.Task {
+	return t.task
 }
